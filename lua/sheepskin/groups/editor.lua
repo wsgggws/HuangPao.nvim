@@ -1,0 +1,203 @@
+local M = {}
+
+local function with_style(spec, style)
+  return vim.tbl_extend("force", spec, style or {})
+end
+
+function M.get(p, options)
+  local styles = options.styles
+  local window_bg = options.transparent and "NONE" or p.bg
+  local float_bg = options.transparent and "NONE" or p.surface
+  local status_bg = options.transparent and "NONE" or p.surface_alt
+  local inactive_bg = options.transparent and "NONE" or p.bg_inactive
+  local diagnostic = styles.diagnostics
+
+  local groups = {
+    -- Base editor surfaces
+    Normal = { fg = p.text, bg = window_bg },
+    NormalNC = {
+      fg = options.dim_inactive and p.text_muted or p.text,
+      bg = inactive_bg,
+    },
+    NormalFloat = { fg = p.text, bg = float_bg },
+    FloatBorder = { fg = p.border, bg = float_bg },
+    FloatTitle = { fg = p.yellow, bg = options.transparent and "NONE" or p.surface_alt, bold = true },
+    FloatFooter = { fg = p.text_muted, bg = options.transparent and "NONE" or p.surface_alt },
+    Cursor = { fg = p.bg, bg = p.cursor },
+    lCursor = "Cursor",
+    CursorIM = "Cursor",
+    TermCursor = "Cursor",
+    CursorLine = { bg = p.bg_highlight },
+    CursorColumn = { bg = p.bg_alt },
+    ColorColumn = { bg = p.bg_alt },
+    LineNr = { fg = p.text_dim },
+    LineNrAbove = { fg = p.text_dim },
+    LineNrBelow = { fg = p.text_dim },
+    CursorLineNr = { fg = p.cursor, bold = true },
+    CursorLineSign = { bg = p.bg_highlight },
+    CursorLineFold = { bg = p.bg_highlight },
+    SignColumn = { fg = p.text_faint, bg = "NONE" },
+    FoldColumn = { fg = p.text_faint, bg = "NONE" },
+    Folded = { fg = p.text_muted, bg = p.surface_alt },
+    VertSplit = { fg = p.border_subtle, bg = "NONE" },
+    WinSeparator = { fg = p.border_subtle, bg = "NONE" },
+    StatusLine = { fg = p.text_muted, bg = status_bg },
+    StatusLineNC = { fg = p.text_dim, bg = status_bg },
+    StatusLineTerm = "StatusLine",
+    StatusLineTermNC = "StatusLineNC",
+    TabLine = { fg = p.text_muted, bg = status_bg },
+    TabLineFill = { bg = status_bg },
+    TabLineSel = { fg = p.text_strong, bg = p.bg_selected, bold = true },
+    WinBar = { fg = p.text_muted, bg = status_bg },
+    WinBarNC = { fg = p.text_dim, bg = status_bg },
+
+    -- Popups and completion surfaces
+    Pmenu = { fg = p.text, bg = p.surface },
+    PmenuSel = { fg = p.text_strong, bg = p.bg_selected, bold = true },
+    PmenuKind = { fg = p.yellow, bg = p.surface },
+    PmenuKindSel = { fg = p.yellow, bg = p.bg_selected },
+    PmenuExtra = { fg = p.text_muted, bg = p.surface },
+    PmenuExtraSel = { fg = p.text_muted, bg = p.bg_selected },
+    PmenuSbar = { bg = p.bg_alt },
+    PmenuThumb = { bg = p.border },
+    WildMenu = { fg = p.text_strong, bg = p.bg_selected, bold = true },
+    QuickFixLine = { fg = p.text_strong, bg = p.bg_selected },
+
+    -- Navigation and selection
+    Visual = { bg = p.bg_visual },
+    VisualNOS = { bg = p.bg_visual },
+    Search = { fg = p.text_strong, bg = p.search },
+    IncSearch = { fg = p.bg, bg = p.cursor, bold = true },
+    CurSearch = { fg = p.bg, bg = p.cursor, bold = true },
+    Substitute = { fg = p.bg, bg = p.red },
+    MatchParen = { fg = p.orange, bg = p.match, bold = true },
+    NonText = { fg = p.text_faint },
+    SpecialKey = { fg = p.text_faint },
+    Whitespace = { fg = p.border_subtle },
+    EndOfBuffer = { fg = p.text_faint },
+    Conceal = { fg = p.text_faint },
+
+    -- Messages and generic text
+    Directory = { fg = p.blue },
+    Title = { fg = p.yellow, bold = true },
+    ErrorMsg = { fg = p.red, bold = true },
+    WarningMsg = { fg = p.orange },
+    MoreMsg = { fg = p.aqua },
+    ModeMsg = { fg = p.text, bold = true },
+    Question = { fg = p.aqua },
+    Error = { fg = p.red },
+    Todo = { fg = p.bg, bg = p.syntax.todo, bold = true },
+    Debug = { fg = p.orange },
+    DebugPC = { bg = p.diagnostic_info_bg },
+    DebugBreakpoint = { fg = p.red, bg = p.diagnostic_error_bg },
+
+    -- Syntax defaults; Tree-sitter groups live in treesitter.lua
+    Comment = with_style({ fg = p.syntax.comment }, styles.comments),
+    Constant = { fg = p.syntax.constant },
+    String = { fg = p.syntax.string },
+    Character = { fg = p.syntax.string },
+    Number = { fg = p.syntax.number },
+    Boolean = { fg = p.syntax.boolean },
+    Float = { fg = p.syntax.number },
+    Identifier = with_style({ fg = p.syntax.variable }, styles.variables),
+    Function = with_style({ fg = p.syntax.func }, styles.functions),
+    Statement = with_style({ fg = p.syntax.keyword }, styles.keywords),
+    Conditional = with_style({ fg = p.syntax.conditional }, styles.keywords),
+    Repeat = with_style({ fg = p.syntax.repeat_ }, styles.keywords),
+    Label = { fg = p.syntax.label },
+    Operator = { fg = p.syntax.operator },
+    Keyword = with_style({ fg = p.syntax.keyword }, styles.keywords),
+    Exception = with_style({ fg = p.syntax.exception }, styles.keywords),
+    PreProc = { fg = p.syntax.keyword },
+    Include = { fg = p.syntax.keyword },
+    Define = { fg = p.syntax.keyword },
+    Macro = { fg = p.syntax.special },
+    PreCondit = { fg = p.syntax.keyword },
+    Type = with_style({ fg = p.syntax.type }, styles.type),
+    StorageClass = with_style({ fg = p.syntax.type }, styles.type),
+    Structure = with_style({ fg = p.syntax.type }, styles.type),
+    Typedef = with_style({ fg = p.syntax.type }, styles.type),
+    Special = { fg = p.syntax.special },
+    SpecialChar = { fg = p.syntax.escape },
+    Tag = { fg = p.syntax.tag },
+    Delimiter = { fg = p.syntax.punctuation },
+    SpecialComment = { fg = p.syntax.comment, bold = true },
+    Underlined = { fg = p.blue, underline = true },
+    Ignore = { fg = p.text_faint },
+    Bold = { bold = true },
+    Italic = { italic = true },
+    Undercurl = { undercurl = true },
+    Strike = { strikethrough = true },
+
+    -- Diff
+    Added = { fg = p.green },
+    Changed = { fg = p.yellow },
+    Removed = { fg = p.red },
+    DiffAdd = { fg = p.text, bg = p.diff_add },
+    DiffChange = { fg = p.text, bg = p.diff_change },
+    DiffDelete = { fg = p.red, bg = p.diff_delete },
+    DiffText = { fg = p.text_strong, bg = p.diff_text },
+    diffAdded = { fg = p.green, bg = p.diff_add },
+    diffRemoved = { fg = p.red, bg = p.diff_delete },
+    diffChanged = { fg = p.yellow, bg = p.diff_change },
+    diffOldFile = { fg = p.text_muted },
+    diffNewFile = { fg = p.text },
+    diffFile = { fg = p.blue },
+    diffLine = { fg = p.text_dim },
+    diffIndexLine = { fg = p.purple },
+
+    -- Diagnostics
+    DiagnosticError = { fg = p.red },
+    DiagnosticWarn = { fg = p.yellow },
+    DiagnosticInfo = { fg = p.blue },
+    DiagnosticHint = { fg = p.aqua },
+    DiagnosticOk = { fg = p.green },
+    DiagnosticDeprecated = { fg = p.text_muted, strikethrough = true },
+    DiagnosticUnnecessary = { fg = p.text_faint },
+    DiagnosticVirtualTextError = { fg = p.red, bg = p.diagnostic_error_bg },
+    DiagnosticVirtualTextWarn = { fg = p.yellow, bg = p.diagnostic_warn_bg },
+    DiagnosticVirtualTextInfo = { fg = p.blue, bg = p.diagnostic_info_bg },
+    DiagnosticVirtualTextHint = { fg = p.aqua, bg = p.diagnostic_hint_bg },
+    DiagnosticVirtualTextOk = { fg = p.green },
+    DiagnosticVirtualTextDeprecated = { fg = p.text_muted },
+    DiagnosticVirtualTextUnnecessary = { fg = p.text_faint },
+    DiagnosticFloatingError = vim.tbl_extend("force", { fg = p.red, bg = p.surface }, diagnostic),
+    DiagnosticFloatingWarn = vim.tbl_extend("force", { fg = p.yellow, bg = p.surface }, diagnostic),
+    DiagnosticFloatingInfo = vim.tbl_extend("force", { fg = p.blue, bg = p.surface }, diagnostic),
+    DiagnosticFloatingHint = vim.tbl_extend("force", { fg = p.aqua, bg = p.surface }, diagnostic),
+    DiagnosticFloatingOk = { fg = p.green, bg = p.surface },
+    DiagnosticSignError = { fg = p.red },
+    DiagnosticSignWarn = { fg = p.yellow },
+    DiagnosticSignInfo = { fg = p.blue },
+    DiagnosticSignHint = { fg = p.aqua },
+    DiagnosticSignOk = { fg = p.green },
+    DiagnosticUnderlineError = { sp = p.red, underline = diagnostic.underline ~= false },
+    DiagnosticUnderlineWarn = { sp = p.yellow, underline = diagnostic.underline ~= false },
+    DiagnosticUnderlineInfo = { sp = p.blue, underline = diagnostic.underline ~= false },
+    DiagnosticUnderlineHint = { sp = p.aqua, underline = diagnostic.underline ~= false },
+    DiagnosticUnderlineOk = { sp = p.green, underline = diagnostic.underline ~= false },
+
+    -- Spelling
+    SpellBad = { sp = p.red, undercurl = true },
+    SpellCap = { sp = p.yellow, undercurl = true },
+    SpellRare = { sp = p.purple, undercurl = true },
+    SpellLocal = { sp = p.aqua, undercurl = true },
+
+    -- Help and health
+    helpCommand = { fg = p.aqua },
+    helpExample = { fg = p.text_muted },
+    helpHeader = { fg = p.yellow, bold = true },
+    helpHyperTextEntry = { fg = p.blue },
+    helpHyperTextJump = { fg = p.blue, underline = true },
+    helpNote = { fg = p.purple },
+    helpSpecial = { fg = p.orange },
+    helpURL = { fg = p.aqua, underline = true },
+    healthError = { fg = p.red },
+    healthWarning = { fg = p.yellow },
+    healthSuccess = { fg = p.green },
+  }
+
+  return groups
+end
+
+return M
