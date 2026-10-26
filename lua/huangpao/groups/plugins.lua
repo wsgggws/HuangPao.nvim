@@ -54,13 +54,13 @@ local function add_plugin_groups(groups, p)
   groups.TelescopeResultsDiffAdd = { fg = p.green }
   groups.TelescopeResultsDiffChange = { fg = p.yellow }
   groups.TelescopeResultsDiffDelete = { fg = p.red }
-  groups.TelescopeResultsField = { fg = p.aqua }
-  groups.TelescopeResultsFunction = { fg = p.green }
-  groups.TelescopeResultsIdentifier = { fg = p.blue }
-  groups.TelescopeResultsNumber = { fg = p.purple }
-  groups.TelescopeResultsOperator = { fg = p.orange }
-  groups.TelescopeResultsString = { fg = p.yellow }
-  groups.TelescopeResultsVariable = { fg = p.text }
+  groups.TelescopeResultsField = { fg = p.syntax.property }
+  groups.TelescopeResultsFunction = { fg = p.syntax.func }
+  groups.TelescopeResultsIdentifier = { fg = p.syntax.variable }
+  groups.TelescopeResultsNumber = { fg = p.syntax.number }
+  groups.TelescopeResultsOperator = { fg = p.syntax.operator }
+  groups.TelescopeResultsString = { fg = p.syntax.string }
+  groups.TelescopeResultsVariable = { fg = p.syntax.variable }
 
   -- neo-tree
   groups.NeoTreeNormal = { fg = p.text, bg = p.surface }

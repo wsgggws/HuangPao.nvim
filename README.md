@@ -1,156 +1,107 @@
-# sheepskin.nvim
+# 黄袍 · HuangPao
 
-一款为长时间编码设计的暖黄色 Neovim 主题。低饱和、低蓝光、不过度灰暗，
-同时保留清晰的语法层次和完整插件支持。
+> 黄裳元吉 文在中也
 
-[![CI](https://github.com/wsgggws/sheepskin.nvim/actions/workflows/ci.yml/badge.svg)](https://github.com/wsgggws/sheepskin.nvim/actions/workflows/ci.yml)
-![Neovim 0.9+](https://img.shields.io/badge/Neovim-0.9%2B-5f7357)
-![License](https://img.shields.io/badge/license-MIT-8b8a7d)
+> 黄袍加身 码上成王
 
-<p align="center">
-  <img src="assets/sheepskin-light.png" alt="sheepskin.nvim 浅色主题截图" width="100%">
-</p>
+古绢承墨，鎏金藏锋。一款以暖黄绢纸与玄墨文字为底色的 Neovim 浅色主题。
 
-## 特点
+![黄袍预览](assets/huangpao-light.png)
 
-- 浅色使用暗黄纸张背景 `#d9bd7a`，深色使用暖橄榄背景 `#302b18`。
-- 正文与语法色保持清晰对比，注释使用低存在感的灰色斜体。
-- 支持 Tree-sitter、LSP、诊断、diff、搜索、补全和终端色。
-- 内置 lualine 主题，并预置 Snacks、Telescope、neo-tree、nvim-tree、
-  bufferline、gitsigns、which-key、ibl、blink.cmp、nvim-cmp、Trouble、
-  Noice、Notify、DAP、dashboard 等扩展高亮。
-- 核心不依赖第三方插件，支持透明背景和失焦窗口淡化。
+需要 **Neovim 0.9+** 与支持真彩色的终端，无插件依赖。
+
+- 变量深蓝、参数梅紫，关键字砖红，函数草绿加粗，注释中性灰斜体。
+- 支持 Treesitter、LSP、诊断、diff 与终端色，内置 lualine 主题。
+- 适配 Telescope、Snacks、Neo-tree、nvim-tree、blink.cmp、nvim-cmp、gitsigns 等插件。
+- 支持透明背景、非活动窗口变暗与高亮覆盖。
 
 ## 安装
 
-需要 Neovim 0.9+ 并启用 `termguicolors`。
-
-### lazy.nvim
+使用 lazy.nvim：
 
 ```lua
 {
-  "wsgggws/sheepskin.nvim",
+  "wsgggws/HuangPao.nvim",
   lazy = false,
   priority = 1000,
-  opts = {
-    variant = "auto",
-  },
-  config = function(_, opts)
-    require("sheepskin").setup(opts)
-    vim.cmd.colorscheme("sheepskin")
+  config = function()
+    vim.cmd.colorscheme("huangpao")
   end,
 }
 ```
 
-本地开发时把仓库地址替换为：
-
-```lua
-dir = "~/github/sheepskin.nvim",
-```
-
-### LazyVim
-
-新建 `lua/plugins/sheepskin.lua`：
+使用 LazyVim 时，注册主题插件，并设置：
 
 ```lua
 return {
-  {
-    "wsgggws/sheepskin.nvim",
-    lazy = false,
-    priority = 1000,
-    opts = {
-      variant = "auto",
-      transparent = false,
-      dim_inactive = true,
-    },
-    config = function(_, opts)
-      require("sheepskin").setup(opts)
-      vim.cmd.colorscheme("sheepskin")
-    end,
-  },
-  {
-    "LazyVim/LazyVim",
-    opts = {
-      colorscheme = "sheepskin",
-    },
-  },
+  { "wsgggws/HuangPao.nvim", lazy = true },
+  { "LazyVim/LazyVim", opts = { colorscheme = "huangpao" } },
 }
 ```
 
+本地安装可将仓库名替换为 `dir = vim.fn.expand("~/github/HuangPao.nvim")`。
+安装后也可执行 `:colorscheme huangpao`。主题会自动启用 `termguicolors`。
+
 ## 配置
 
+`setup()` 可省略；自定义时在加载主题之前调用：
+
 ```lua
-require("sheepskin").setup({
-  -- "auto" 跟随 vim.o.background，也可以强制 "light" / "dark"
-  variant = "auto",
+require("huangpao").setup({
   transparent = false,
   dim_inactive = true,
   terminal_colors = true,
-
   styles = {
     comments = { italic = true },
-    keywords = { italic = false },
-    functions = {},
-    variables = {},
-    type = {},
-    diagnostics = { underline = true },
+    functions = { bold = true },
   },
-
-  overrides = {
-    -- Comment = { fg = "text_muted" },
-    -- CursorLine = { bg = "bg_highlight" },
-  },
+  overrides = {},
 })
-
-vim.cmd.colorscheme("sheepskin")
+vim.cmd.colorscheme("huangpao")
 ```
 
-`overrides` 支持十六进制颜色或语义色名，例如 `text`、`bg_selected`、
-`syntax.keyword` 和 `syntax.string`。
-
-## 深浅色切换
-
-```vim
-:SheepskinLight
-:SheepskinDark
-:SheepskinToggle
-:SheepskinTransparent
-```
-
-也可以使用 Lua API：
+`overrides` 支持色板路径、十六进制颜色与高亮链接，例如：
 
 ```lua
-local theme = require("sheepskin")
-theme.set_variant("light")
-theme.set_variant("dark")
-theme.toggle()
+require("huangpao").setup({
+  overrides = {
+    Comment = { fg = "comment", italic = false },
+    MyGroup = "Comment",
+  },
+})
 ```
+
+修改后重新执行 `:colorscheme huangpao`。`:HuangPaoTransparent` 可临时切换透明背景，完整选项见 `:help huangpao`。
 
 ## lualine
 
 ```lua
-{
-  "nvim-lualine/lualine.nvim",
-  opts = {
-    options = { theme = "sheepskin" },
-  },
-}
+require("lualine").setup({ options = { theme = "huangpao" } })
 ```
 
-## 开发
+## 色彩
+
+| 角色          | 色值                  |
+| ------------- | --------------------- |
+| 背景 / 正文   | `#cdb06a` / `#342f23` |
+| 注释 / 关键字 | `#6b6b65` / `#86312d` |
+| 变量 / 参数   | `#254f78` / `#763b65` |
+| 函数 / 字符串 | `#375a23` / `#4e551f` |
+
+完整色板见 [palette.lua](lua/huangpao/palette.lua)。
+
+## 其他配色
+
+[extras/](extras/README.md) 提供 WezTerm、tmux、fzf、bat、delta、Alfred 与 slides 的同色板主题文件。
+
+## 预览
 
 ```sh
-make test
-make test-dark
-make test-light
-stylua --check .
+nvim -u scripts/preview.lua
 ```
 
-CI 覆盖 Neovim 0.9、0.10、stable 和 nightly。推送 `vX.Y.Z` 标签会自动创建
-GitHub Release。
+预览无需安装插件，展示代码、诊断、搜索与选区配色。开发与截图方法见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
-维护规范见 [agent.md](agent.md)。
-
-## License
+## 许可
 
 [MIT](LICENSE)

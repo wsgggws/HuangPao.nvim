@@ -1,0 +1,65 @@
+{
+  "alfredtheme": {
+    "credit": "HuangPao.nvim contributors",
+    "name": "HuangPao Light Large",
+    "result": {
+      "backgroundSelected": "#b08b47FF",
+      "iconPaddingHorizontal": 7,
+      "iconSize": 40,
+      "paddingVertical": 4,
+      "roundness": 8,
+      "shortcut": {
+        "color": "#683b13FF",
+        "colorSelected": "#252219FF",
+        "font": "System",
+        "size": 18
+      },
+      "subtext": {
+        "color": "#504a37FF",
+        "colorSelected": "#342f23FF",
+        "font": "System",
+        "size": 14
+      },
+      "text": {
+        "color": "#342f23FF",
+        "colorSelected": "#252219FF",
+        "font": "System",
+        "size": 18
+      },
+      "textSpacing": 5
+    },
+    "scrollbar": {
+      "color": "#987d48FF",
+      "thickness": 2
+    },
+    "search": {
+      "background": "#d4b976FF",
+      "backgroundSelected": "#b08b47FF",
+      "paddingHorizontal": 7,
+      "paddingVertical": 5,
+      "roundness": 8,
+      "spacing": 9,
+      "text": {
+        "color": "#252219FF",
+        "colorSelected": "#252219FF",
+        "font": "System Light",
+        "size": 36
+      }
+    },
+    "separator": {
+      "color": "#987d48FF",
+      "thickness": 1
+    },
+    "visualEffectMode": 1,
+    "window": {
+      "blur": 0,
+      "borderColor": "#987d48FF",
+      "borderPadding": 0,
+      "color": "#cdb06aFF",
+      "paddingHorizontal": 9,
+      "paddingVertical": 9,
+      "roundness": 15,
+      "width": 760
+    }
+  }
+}

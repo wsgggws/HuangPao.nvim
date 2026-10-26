@@ -1,0 +1,1 @@
+require("huangpao").load()

@@ -1,10 +1,10 @@
 local M = {}
 
 local modules = {
-  require("sheepskin.groups.editor"),
-  require("sheepskin.groups.treesitter"),
-  require("sheepskin.groups.lsp"),
-  require("sheepskin.groups.plugins"),
+  require("huangpao.groups.editor"),
+  require("huangpao.groups.treesitter"),
+  require("huangpao.groups.lsp"),
+  require("huangpao.groups.plugins"),
 }
 
 function M.get(colors, options)

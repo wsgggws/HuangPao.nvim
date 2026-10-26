@@ -1,12 +1,9 @@
 NVIM ?= nvim
+PYTHON ?= python3
 
-.PHONY: test test-dark test-light
+.PHONY: test
 
 test:
-	SHEEPSKIN_TEST_VARIANT=auto $(NVIM) --headless --clean -l tests/smoke.lua
-
-test-dark:
-	SHEEPSKIN_TEST_VARIANT=dark $(NVIM) --headless --clean -l tests/smoke.lua
-
-test-light:
-	SHEEPSKIN_TEST_VARIANT=light $(NVIM) --headless --clean -l tests/smoke.lua
+	$(NVIM) --headless --clean -l tests/smoke.lua
+	$(NVIM) --headless -u scripts/preview.lua -c 'luafile tests/preview.lua'
+	$(PYTHON) -m unittest discover -s tests -p 'test_*.py' -v

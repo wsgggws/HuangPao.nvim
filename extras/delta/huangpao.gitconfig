@@ -1,0 +1,18 @@
+[delta "huangpao"]
+    light = true
+    dark = false
+    syntax-theme = HuangPao
+    minus-style = syntax "#c39c87"
+    minus-emph-style = "#252219" bold "#c39c87"
+    plus-style = syntax "#adb87f"
+    plus-emph-style = "#252219" bold "#94aa70"
+    zero-style = syntax "#cdb06a"
+    file-style = bold "#234861"
+    file-decoration-style = "#987d48" ul
+    hunk-header-style = syntax file line-number
+    hunk-header-decoration-style = "#987d48" box
+    line-numbers-left-style = "#615a43" "#cdb06a"
+    line-numbers-right-style = "#615a43" "#cdb06a"
+    line-numbers-zero-style = "#615a43" "#cdb06a"
+    line-numbers-minus-style = "#7d2925" "#c39c87"
+    line-numbers-plus-style = "#2d4824" "#adb87f"

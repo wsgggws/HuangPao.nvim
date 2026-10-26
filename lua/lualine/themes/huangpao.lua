@@ -1,6 +1,4 @@
-local config = require("sheepskin.config")
-local variant = config.variant and config.variant() or (vim.o.background == "light" and "light" or "dark")
-local p = require("sheepskin.palette").get(variant)
+local p = require("huangpao.palette").get()
 
 local function mode(accent)
   return {

@@ -1,0 +1,106 @@
+*huangpao.txt*  黄袍 · HuangPao — warm silk and dark ink
+
+黄裳元吉，文在中也。                                          *huangpao*
+
+Requires Neovim 0.9+ and a true-color terminal or GUI.
+One light palette, no plugin dependencies.
+
+LOAD                                                        *huangpao-load*
+>
+    :colorscheme huangpao
+<
+Enables 'termguicolors' and sets 'background' to "light".
+
+CONFIGURATION                                              *huangpao-setup*
+
+setup() is optional. Call it before loading the colorscheme:
+>
+    require("huangpao").setup({
+      transparent = false,
+      dim_inactive = true,
+      terminal_colors = true,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = false },
+        functions = { bold = true },
+        variables = {},
+        type = {},
+        diagnostics = { underline = true },
+      },
+      overrides = {},
+    })
+    vim.cmd.colorscheme("huangpao")
+<
+Each setup() call starts from defaults. Reload the colorscheme to apply it.
+
+transparent       Clears normal, inactive, floating, tree and status surfaces.
+                  Selections, cursor lines and diagnostic backgrounds remain.
+dim_inactive      Dims text in inactive windows. The inactive background has a
+                  separate color even when this option is false.
+terminal_colors   Sets g:terminal_color_0 through g:terminal_color_15. When
+                  false, existing values are left alone. Existing terminals
+                  may need to be reopened to pick up changes.
+styles            Per-category nvim_set_hl attributes. Set italic=false or
+                  bold=false to disable the respective default.
+overrides         Highlight table applied after defaults. Values may be a
+                  highlight specification or a string naming a linked group.
+                  fg/bg/sp accept #RRGGBB, "NONE", or palette paths such as
+                  "syntax.parameter". Each specification replaces a group.
+
+EXAMPLE                                                *huangpao-customize*
+>
+    require("huangpao").setup({
+      styles = { comments = { italic = false } },
+      overrides = {
+        CursorLineNr = { fg = "syntax.func", bold = true },
+        MyGroup = "Comment",
+      },
+    })
+    vim.cmd.colorscheme("huangpao")
+<
+See lua/huangpao/palette.lua for all named colors. get_palette() exposes the
+shared palette; use overrides for customization rather than mutating it.
+
+COMMANDS                                                *huangpao-commands*
+
+:HuangPaoTransparent     Toggle transparent backgrounds. If another theme is
+                        active, update the option without replacing it.
+:checkhealth huangpao    Check Neovim version and active theme configuration.
+
+LUALINE                                                  *huangpao-lualine*
+>
+    require("lualine").setup({ options = { theme = "huangpao" } })
+<
+INTEGRATIONS                                             *huangpao-plugins*
+
+Vim syntax, Tree-sitter, LSP semantic tokens, diagnostics, inlay hints, search,
+selection, diffs and terminal ANSI colors are covered. Parameters and fields
+are distinguished when a parser or language server identifies those roles.
+
+Optional highlights include lualine, Telescope, Snacks, neo-tree, nvim-tree,
+bufferline, gitsigns, which-key, ibl, blink.cmp, nvim-cmp, Trouble, Noice,
+Notify and DAP. Loading the theme does not require those plugins.
+
+PREVIEW                                                  *huangpao-preview*
+
+From the repository root:
+>
+    nvim -u scripts/preview.lua
+    uv run scripts/screenshot.py
+<
+The preview has explicit diagnostic/Git fixtures and uses the bundled Lua
+parser if available, otherwise Vim syntax. It does not load personal plugins.
+The optional screenshot script captures the actual Neovim RGB UI grid using
+Python, pynvim, Pillow and installed monospace/CJK fonts. See CONTRIBUTING.md.
+
+CROSS-TOOL THEMES                                         *huangpao-extras*
+
+extras/ contains native WezTerm, tmux, fzf, bat, delta, Alfred and slides
+themes generated from the same palette. See extras/README.md for import
+instructions. Exporting requires Neovim, not Python.
+
+LICENSE                                                  *huangpao-license*
+
+MIT. Copyright (c) 2026 HuangPao.nvim contributors.
+
+vim:tw=78:ts=8:noet:ft=help:norl:

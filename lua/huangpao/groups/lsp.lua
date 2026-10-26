@@ -33,10 +33,10 @@ function M.get(p)
     ["@lsp.type.type"] = { link = "@type" },
     ["@lsp.type.typeParameter"] = { link = "@type" },
     ["@lsp.type.variable"] = { link = "@variable" },
-    ["@lsp.typemod.function.defaultLibrary"] = { fg = p.aqua },
-    ["@lsp.typemod.method.defaultLibrary"] = { fg = p.aqua },
+    ["@lsp.typemod.function.defaultLibrary"] = { link = "@function.builtin" },
+    ["@lsp.typemod.method.defaultLibrary"] = { link = "@function.builtin" },
     ["@lsp.typemod.variable.defaultLibrary"] = { fg = p.purple },
-    ["@lsp.typemod.variable.readonly"] = { fg = p.orange },
+    ["@lsp.typemod.variable.readonly"] = { link = "@constant" },
   }
 end
 

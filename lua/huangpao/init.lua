@@ -1,5 +1,5 @@
-local config = require("sheepskin.config")
-local palette = require("sheepskin.palette")
+local config = require("huangpao.config")
+local palette = require("huangpao.palette")
 
 local M = {}
 
@@ -56,19 +56,10 @@ end
 
 local function create_commands()
   local commands = {
-    SheepskinLight = function()
-      M.set_variant("light")
-    end,
-    SheepskinDark = function()
-      M.set_variant("dark")
-    end,
-    SheepskinToggle = function()
-      M.toggle()
-    end,
-    SheepskinTransparent = function()
+    HuangPaoTransparent = function()
       config.get().transparent = not config.get().transparent
-      if vim.g.colors_name == "sheepskin" then
-        vim.cmd.colorscheme("sheepskin")
+      if vim.g.colors_name == "huangpao" then
+        vim.cmd.colorscheme("huangpao")
       end
     end,
   }
@@ -82,19 +73,15 @@ end
 
 function M.setup(options)
   config.setup(options)
-  if config.get().variant ~= "auto" then
-    vim.o.background = config.get().variant
-  end
   create_commands()
   return config.get()
 end
 
 function M.load()
   local options = config.get()
-  local variant = config.variant()
-
-  local colors = palette.get(variant)
-  local groups = require("sheepskin.groups").get(colors, options)
+  vim.o.background = "light"
+  local colors = palette.get()
+  local groups = require("huangpao.groups").get(colors, options)
 
   vim.o.termguicolors = true
   vim.cmd("highlight clear")
@@ -103,11 +90,10 @@ function M.load()
     vim.cmd("syntax reset")
   end
 
-  vim.g.colors_name = "sheepskin"
+  vim.g.colors_name = "huangpao"
 
-  -- lualine keeps this module cached between ColorScheme events. Clearing it
-  -- lets its native theme follow runtime dark/light switches.
-  package.loaded["lualine.themes.sheepskin"] = nil
+  -- lualine keeps this module cached between ColorScheme events.
+  package.loaded["lualine.themes.huangpao"] = nil
 
   create_commands()
   apply_groups(colors, groups)
@@ -118,21 +104,8 @@ function M.load()
   end
 end
 
-function M.set_variant(variant)
-  if variant ~= "dark" and variant ~= "light" then
-    error(('sheepskin: variant must be "dark" or "light", got %q'):format(tostring(variant)))
-  end
-
-  config.get().variant = variant
-  vim.o.background = variant
-end
-
-function M.toggle()
-  M.set_variant(config.variant() == "dark" and "light" or "dark")
-end
-
 function M.get_palette()
-  return palette.get(config.variant())
+  return palette.get()
 end
 
 return M

@@ -44,11 +44,7 @@ jobs:
         with:
           neovim: true
           version: ${{ matrix.neovim }}
-      - name: Test light theme
-        run: make test-light
-      - name: Test dark theme
-        run: make test-dark
-      - name: Test automatic variant
+      - name: Test theme
         run: make test
       - name: Check whitespace
         run: git diff --check
