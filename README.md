@@ -1,8 +1,8 @@
 # 黄袍 · HuangPao
 
-> 黄裳元吉 文在中也
+> 黄裳元吉，文在中也。
 
-> 黄袍加身 码上成王
+> 黄袍加身，码上成王。
 
 古绢承墨，鎏金藏锋。一款以暖黄绢纸与玄墨文字为底色的 Neovim 浅色主题。
 
@@ -81,12 +81,16 @@ require("lualine").setup({ options = { theme = "huangpao" } })
 
 ## 色彩
 
-| 角色          | 色值                  |
-| ------------- | --------------------- |
-| 背景 / 正文   | `#cdb06a` / `#342f23` |
-| 注释 / 关键字 | `#6b6b65` / `#86312d` |
-| 变量 / 参数   | `#254f78` / `#763b65` |
-| 函数 / 字符串 | `#375a23` / `#4e551f` |
+| 角色 | 色值 | 色样 |
+| --- | --- | --- |
+| 背景 | `#cdb06a` | ![#cdb06a](assets/swatches/bg.svg) |
+| 正文 | `#342f23` | ![#342f23](assets/swatches/text.svg) |
+| 注释 | `#6b6b65` | ![#6b6b65](assets/swatches/comment.svg) |
+| 关键字 | `#86312d` | ![#86312d](assets/swatches/keyword.svg) |
+| 变量 | `#254f78` | ![#254f78](assets/swatches/variable.svg) |
+| 参数 | `#763b65` | ![#763b65](assets/swatches/parameter.svg) |
+| 函数 | `#375a23` | ![#375a23](assets/swatches/func.svg) |
+| 字符串 | `#4e551f` | ![#4e551f](assets/swatches/string.svg) |
 
 完整色板见 [palette.lua](lua/huangpao/palette.lua)。
 

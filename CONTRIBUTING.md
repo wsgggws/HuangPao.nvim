@@ -23,6 +23,7 @@ stylua --check .
 ```
 
 生成文件随源码保存在 `extras/`，方便用户直接导入。导出与预览都不修改个人应用配置。
+README 色块由同一导出命令生成到 `assets/swatches/`，随色板更新。
 Neovim、Tree-sitter、LSP、bat 与 slides 在各自能识别的角色范围内保持一致；
 不要为了模拟不存在的参数 token 而把所有变量都染成参数色。
 

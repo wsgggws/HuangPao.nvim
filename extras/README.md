@@ -135,5 +135,5 @@ nvim --headless -u NONE -l scripts/export.lua --check
 make test
 ```
 
-导出只写入本仓库的 `extras/`，不会安装或覆盖个人配置。
+导出写入本仓库的 `extras/` 与 README 色块目录 `assets/swatches/`，不会安装或覆盖个人配置。
 修改映射后重新导出并检查原生文件；个人统一切换和窗口选择器在各自配置目录维护。

@@ -1,6 +1,6 @@
 local M = {}
 
--- Pure native-format builders; every concrete color comes from palette.lua.
+-- Pure export builders; every concrete color comes from palette.lua.
 function M.get(p)
   local function toml(values)
     local lines = {}
@@ -118,6 +118,23 @@ function M.get(p)
   }
   for path, content in pairs(require("huangpao.extras.native").get(p)) do
     outputs[path] = content
+  end
+  for _, sample in ipairs({
+    { "bg", p.bg },
+    { "text", p.text },
+    { "comment", p.comment },
+    { "keyword", p.syntax.keyword },
+    { "variable", p.syntax.variable },
+    { "parameter", p.syntax.parameter },
+    { "func", p.syntax.func },
+    { "string", p.syntax.string },
+  }) do
+    outputs["assets/swatches/" .. sample[1] .. ".svg"] = (
+      '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="18" viewBox="0 0 48 18" role="img" aria-label="%s">\n'
+      .. "  <title>%s</title>\n"
+      .. '  <rect width="48" height="18" rx="3" fill="%s"/>\n'
+      .. "</svg>\n"
+    ):format(sample[2], sample[2], sample[2])
   end
   return outputs
 end
