@@ -71,6 +71,10 @@
       "literal_string": {
         "color": "#4e551f"
       },
+      "literal_string_doc": {
+        "color": "#6b6b65",
+        "italic": true
+      },
       "literal_string_escape": {
         "color": "#683b13"
       },

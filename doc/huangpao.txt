@@ -77,6 +77,10 @@ Vim syntax, Tree-sitter, LSP semantic tokens, diagnostics, inlay hints, search,
 selection, diffs and terminal ANSI colors are covered. Parameters and fields
 are distinguished when a parser or language server identifies those roles.
 
+Docstrings captured as @string.documentation (such as Python function
+docstrings) link to Comment and follow styles.comments. Ordinary strings keep
+their string color. Slides exports also use comment styling for docstrings.
+
 Optional highlights include lualine, Telescope, Snacks, neo-tree, nvim-tree,
 bufferline, gitsigns, which-key, ibl, blink.cmp, nvim-cmp, Trouble, Noice,
 Notify and DAP. Loading the theme does not require those plugins.

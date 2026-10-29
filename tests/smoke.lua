@@ -51,10 +51,10 @@ local semantic_groups = {
   property = { "@variable.member", "@lsp.type.property", "TelescopeResultsField" },
   number = { "Number", "@number", "@lsp.type.number", "TelescopeResultsNumber" },
   type = { "Type", "@type", "@lsp.type.type" },
-  comment = { "Comment", "@comment", "@lsp.type.comment" },
+  comment = { "Comment", "@comment", "@comment.documentation", "@string.documentation", "@lsp.type.comment" },
   func = { "Function", "@function", "@function.call", "@lsp.type.function" },
   method = { "@function.method", "@function.method.call", "@method", "@method.call", "@lsp.type.method" },
-  string = { "String", "@string", "@string.documentation", "@lsp.type.string", "TelescopeResultsString" },
+  string = { "String", "@string", "@lsp.type.string", "TelescopeResultsString" },
   operator = { "Operator", "@operator", "@lsp.type.operator", "TelescopeResultsOperator" },
   keyword = { "Keyword", "@keyword", "@keyword.operator", "@lsp.type.keyword" },
   constant = { "Constant", "@constant", "@lsp.type.enumMember", "@lsp.typemod.variable.readonly" },
@@ -73,6 +73,10 @@ assert(palette.syntax.number ~= palette.syntax.boolean, "numbers must stand apar
 assert(palette.syntax.type ~= palette.syntax.string, "types must stand apart from strings")
 local comment = vim.api.nvim_get_hl(0, { name = "Comment", link = false })
 assert(comment.italic == true, "comments must retain their subdued italic style")
+assert(
+  vim.deep_equal(vim.api.nvim_get_hl(0, { name = "@string.documentation", link = false }), comment),
+  "docstrings must inherit the full comment style"
+)
 
 -- Callable names must stay distinct from fields, including semantic-token overrides.
 local callables = {
@@ -156,8 +160,12 @@ vim.cmd("HuangPaoTransparent")
 local restored_normal = vim.api.nvim_get_hl(0, { name = "Normal", link = false })
 assert(restored_normal.bg == tonumber(palette.bg:sub(2), 16), "opaque mode did not restore the background")
 
-theme.setup({ styles = { functions = { bold = false } } })
+theme.setup({ styles = { functions = { bold = false }, comments = { italic = false } } })
 vim.cmd.colorscheme("huangpao")
+assert(
+  not vim.api.nvim_get_hl(0, { name = "@string.documentation", link = false }).italic,
+  "docstrings must respect styles.comments.italic = false"
+)
 for _, name in ipairs(callables) do
   local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
   assert(not hl.bold, name .. " must respect styles.functions.bold = false")

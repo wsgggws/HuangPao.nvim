@@ -66,7 +66,7 @@ function M.get(p, options)
     ["@punctuation.delimiter"] = { fg = p.syntax.punctuation },
     ["@punctuation.special"] = { fg = p.orange },
     ["@string"] = { fg = p.syntax.string },
-    ["@string.documentation"] = { fg = p.syntax.string },
+    ["@string.documentation"] = { link = "Comment" },
     ["@string.escape"] = { fg = p.syntax.escape },
     ["@string.regexp"] = { fg = p.syntax.regexp },
     ["@string.special"] = { fg = p.syntax.escape },

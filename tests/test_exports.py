@@ -113,12 +113,14 @@ class NativeThemeTests(unittest.TestCase):
             "name_constant": "constant",
             "literal_number": "number",
             "literal_string": "string",
+            "literal_string_doc": "comment",
             "operator": "operator",
             "punctuation": "punctuation",
         }.items():
             self.assertEqual(chroma[token]["color"], self.p["syntax"][role], token)
         self.assertTrue(chroma["name_function"]["bold"])
         self.assertTrue(chroma["comment"]["italic"])
+        self.assertEqual(chroma["literal_string_doc"], chroma["comment"])
 
     def test_shell_and_tmux_files_keep_selections_distinct(self):
         fzf = EXTRAS / "fzf/huangpao.sh"

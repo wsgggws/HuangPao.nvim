@@ -219,6 +219,7 @@ local function slides(p)
     literal_number = color(s.number),
     literal_date = color(s.number),
     literal_string = color(s.string),
+    literal_string_doc = color(s.comment, { italic = true }),
     literal_string_escape = color(s.escape),
     generic_deleted = color(p.red, { background_color = p.diff_delete }),
     generic_inserted = color(p.green, { background_color = p.diff_add }),

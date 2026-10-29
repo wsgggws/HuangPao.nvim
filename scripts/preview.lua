@@ -79,7 +79,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
       { "string    warm silk", "String" },
       { "number    0.85 / 3", "Number" },
       { "comment   quiet notes", "Comment" },
-      { "", "Normal" },
+      { 'docstring """quiet notes"""', "@string.documentation" },
       { "DIAGNOSTICS", "Title" },
       { "", "Normal" },
       { "E  error:   cinnabar", "DiagnosticError" },
