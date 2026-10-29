@@ -29,7 +29,7 @@ vim.schedule(function()
     assert(panel and vim.bo[panel].buftype == "nofile", "palette must be a scratch buffer")
     local lines = table.concat(vim.api.nvim_buf_get_lines(panel, 0, -1, false), "\n")
     assert(lines:find("#cdb06a", 1, true), "preview must show the accepted paper color")
-    assert(lines:find("parameter", 1, true) and lines:find("changed line", 1, true), "palette roles missing")
+    assert(lines:find("parameter", 1, true) and lines:find("current match", 1, true), "palette roles missing")
 
     -- Check help tags without writing generated files to the repository.
     local temp = vim.fn.tempname()
